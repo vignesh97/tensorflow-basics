@@ -2,18 +2,18 @@ import os
 import tensorflow as tf
 
 # Turn off TensorFlow warning messages in program output
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '0'
 
 # Define computational graph
 X = tf.placeholder(tf.float32, name="X")
 Y = tf.placeholder(tf.float32, name= "Y")
 
-addition = tf.add(x)
+addition = tf.add(X,Y, name="addition")
 
 
 # Create the session
 with tf.Session() as session:
 
-    result =
+    result = session.run(addition, feed_dict={X: [1], Y: [4]})
 
     print(result)
