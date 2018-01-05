@@ -98,29 +98,36 @@ with tf.variable_scope('logging'):
 saver = tf.train.Saver()
 
 with tf.Session() as session:
-    session.run(tf.global_variables_initializer())
+    #session.run(tf.global_variables_initializer())
 
     training_writer = tf.summary.FileWriter("C:/Projects/tensorboard/training", session.graph)
     testing_writer = tf.summary.FileWriter("C:/Projects/tensorboard/testing", session.graph)
 
+    saver.restore(session, "C:/Projects/tensorboard/models/trained_models.ckpt")
 
-    for epoch in range(training_epochs):
+
+    ''' for epoch in range(training_epochs):
         session.run(optimizer, feed_dict={X: X_scaled_training, Y: Y_scaled_training})
         if epoch % 5 == 0:
-            training_cost, training_summary = session.run([cost, summary], feed_dict={X: X_scaled_training, Y: Y_scaled_training})
-            testing_cost, testing_summary = session.run([cost, summary], feed_dict={X: X_scaled_testing, Y: Y_scaled_testing})
+            training_cost, training_summary = session.run([cost, summary], feed_dict={X: X_scaled_training,
+             Y: Y_scaled_training})
+            testing_cost, testing_summary = session.run([cost, summary], feed_dict={X: X_scaled_testing,
+             Y: Y_scaled_testing})
 
             training_writer.add_summary(training_summary, epoch)
             testing_writer.add_summary(testing_summary, epoch)
 
             print(epoch, training_cost, testing_cost)
         #print("Training pass: {}".format(epoch))
-    print("Training is complete")
+    print("Training is complete")  '''
+    training_cost, training_summary = session.run([cost, summary], feed_dict={X: X_scaled_training, Y: Y_scaled_training})
+    testing_cost, testing_summary = session.run([cost, summary], feed_dict={X: X_scaled_testing, Y: Y_scaled_testing})
+
     final_training_cost = session.run(cost, feed_dict={X: X_scaled_training, Y: Y_scaled_training})
     final_testing_cost = session.run(cost, feed_dict={X: X_scaled_testing, Y: Y_scaled_testing})
     print("Final Training cost: {}".format(final_training_cost))
     print("Final Testing cost: {}".format(final_testing_cost))
-    save_path = saver.save(session, "C:/Projects/tensorboard/models/trained_models.ckpt")
+    #save_path = saver.save(session, "C:/Projects/tensorboard/models/trained_models.ckpt")
     print("Model saved : {}".format(final_testing_cost))
 
     # tensorboard --logdir="C:\tensorboard\"
