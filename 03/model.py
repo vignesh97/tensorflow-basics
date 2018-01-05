@@ -79,8 +79,8 @@ with tf.variable_scope('output'):
 # Section Two: Define the cost function of the neural network that will measure prediction accuracy during training
 
 with tf.variable_scope('cost'):
-    Y =
-    cost =
+    Y = tf.placeholder(tf.float32, shape=(None , 1))
+    cost = tf.reduce_mean(tf.squared_difference(prediction , Y))
 
 
 # Section Three: Define the optimizer function that will be run to optimize the neural network
