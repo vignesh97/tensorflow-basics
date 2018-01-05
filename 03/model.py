@@ -130,6 +130,17 @@ with tf.Session() as session:
     final_testing_cost = session.run(cost, feed_dict={X: X_scaled_testing, Y: Y_scaled_testing})
     print("Final Training cost: {}".format(final_training_cost))
     print("Final Testing cost: {}".format(final_testing_cost))
+
+    Y_predicted_scaled = session.run(prediction, feed_dict={X: X_scaled_testing})
+
+    Y_predicted = Y_scaler.inverse_transform(Y_predicted_scaled)
+
+    real_earnings = test_data_df['total_earnings'].values[0]
+    predicted_earnings = Y_predicted[0][0]
+
+    print("The actual earnings of Game #1 were ${}".format(real_earnings))
+    print("Our neural network predicted earnings of ${}".format(predicted_earnings))
+
     #save_path = saver.save(session, "C:/Projects/tensorboard/models/trained_models.ckpt")
     #print("Model saved : {}".format(final_testing_cost))
 
