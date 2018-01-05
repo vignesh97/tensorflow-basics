@@ -95,7 +95,7 @@ with tf.variable_scope('logging'):
     tf.summary.scalar('current_cost', cost)
     summary = tf.summary.merge_all()
 
-
+saver = tf.train.Saver()
 
 with tf.Session() as session:
     session.run(tf.global_variables_initializer())
@@ -120,4 +120,7 @@ with tf.Session() as session:
     final_testing_cost = session.run(cost, feed_dict={X: X_scaled_testing, Y: Y_scaled_testing})
     print("Final Training cost: {}".format(final_training_cost))
     print("Final Testing cost: {}".format(final_testing_cost))
+    save_path = saver.save(session, "C:/Projects/tensorboard/models/trained_models.ckpt")
+    print("Model saved : {}".format(final_testing_cost))
+
     # tensorboard --logdir="C:\tensorboard\"
