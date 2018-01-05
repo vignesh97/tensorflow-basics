@@ -171,3 +171,20 @@ with tf.Session() as session:
     )
 
     model_builder.save()
+
+    #Google cloud commands
+    #gsutil mb -l us-central1 gs://tensorflow-class-1000
+    #gsutil cp -R exported_model/* gs://tensorflow-class-1000/earnings_v1/
+    #gcloud ml-engine models create earnings --regions us-central1
+    #gcloud ml-engine versions create v1 --model=earnings --origin=gs://tensorflow-class-1000/earnings_v1/
+    #gcloud ml-engine predict --model=earnings --json-instances=sample_input_prescaled.json
+
+
+
+
+
+
+
+
+
+
