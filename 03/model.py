@@ -95,6 +95,7 @@ with tf.variable_scope('train'):
 
 with tf.variable_scope('logging'):
     tf.summary.scalar('current_cost', cost)
+    tf.summary.histogram('prediction', prediction)
     summary = tf.summary.merge_all()
 
 saver = tf.train.Saver()
