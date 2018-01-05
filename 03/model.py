@@ -51,26 +51,29 @@ with tf.variable_scope('input'):
 
 # Layer 1
 with tf.variable_scope('layer_1'):
-    weights = tf.get_variable(name="weights1", shape=[number_of_inputs, layer_1_nodes], initializer=tf.contrib.layers.xavier_initializers())
+    weights = tf.get_variable(name="weights1", shape=[number_of_inputs, layer_1_nodes],
+                              initializer=tf.contrib.layers.xavier_initializer())
     biases = tf.get_variable(name="biases1", shape=[layer_1_nodes], initializer=tf.zeros_initializer)
     layer_1_output = tf.nn.relu(tf.matmul(X, weights)+ biases)
 
 # Layer 2
 with tf.variable_scope('layer_2'):
-    weights = tf.get_variable(name="weights2", shape=[layer_1_nodes, layer_2_nodes], initializer=tf.contrib.layers.xavier_initializers())
+    weights = tf.get_variable(name="weights2", shape=[layer_1_nodes, layer_2_nodes],
+                              initializer=tf.contrib.layers.xavier_initializer())
     biases = tf.get_variable(name="biases2", shape=[layer_2_nodes], initializer=tf.zeros_initializer)
     layer_2_output = tf.nn.relu(tf.matmul(layer_1_output, weights) + biases)
 
 # Layer 3
 with tf.variable_scope('layer_3'):
-    weights = tf.get_variable(name="weights3", shape=[layer_2_nodes, layer_3_nodes],  initializer=tf.contrib.layers.xavier_initializers())
+    weights = tf.get_variable(name="weights3", shape=[layer_2_nodes, layer_3_nodes],
+                              initializer=tf.contrib.layers.xavier_initializer())
     biases = tf.get_variable(name="biases3", shape=[layer_3_nodes], initializer=tf.zeros_initializer)
     layer_3_output = tf.nn.relu(tf.matmul(layer_2_output, weights) + biases)
 
 # Output Layer
 with tf.variable_scope('output'):
     weights = tf.get_variable(name="weights4", shape=[layer_3_nodes, number_of_outputs],
-                              initializer=tf.contrib.layers.xavier_initializers())
+                              initializer=tf.contrib.layers.xavier_initializer())
     biases = tf.get_variable(name="biases4", shape=[number_of_outputs], initializer=tf.zeros_initializer)
     prediction = tf.nn.relu(tf.matmul(layer_3_output, weights) + biases)
 
@@ -87,3 +90,11 @@ with tf.variable_scope('cost'):
 
 with tf.variable_scope('train'):
     optimizer = tf.train.AdamOptimizer(learning_rate).minimize(cost)
+
+with tf.Session() as session:
+    session.run(tf.global_variables_initializer())
+    for epoch in range(training_epochs):
+        session.run(optimizer, feed_dict={X: X_scaled_training, Y: Y_scaled_training})
+        print("Training pass: {}".format(epoch))
+    print("Training is complete")
+
