@@ -35,25 +35,25 @@ training_epochs = 100
 display_step = 5
 
 # Define how many inputs and outputs are in our neural network
-number_of_inputs =
-number_of_outputs =
+number_of_inputs = 9
+number_of_outputs = 1
 
 # Define how many neurons we want in each layer of our neural network
-layer_1_nodes =
-layer_2_nodes =
-layer_3_nodes =
+layer_1_nodes = 50
+layer_2_nodes = 100
+layer_3_nodes = 50
 
 # Section One: Define the layers of the neural network itself
 
 # Input Layer
 with tf.variable_scope('input'):
-    X =
+    X = tf.placeholder(tf.float32,shape=(None, number_of_inputs))
 
 # Layer 1
 with tf.variable_scope('layer_1'):
-    weights =
-    biases =
-    layer_1_output =
+    weights = tf.get_variable(name="weights1", shape=[number_of_inputs, layer_1_nodes], initializer=tf.contrib.layers.xavier_initializers())
+    biases = tf.get_variable(name="biases1", shape=[layer_1_nodes], initializer=tf.zeros_initializer)
+    layer_1_output = tf.nn.relu(tf.matmul(X, weights)+ biases)
 
 # Layer 2
 with tf.variable_scope('layer_2'):
