@@ -86,4 +86,4 @@ with tf.variable_scope('cost'):
 # Section Three: Define the optimizer function that will be run to optimize the neural network
 
 with tf.variable_scope('train'):
-    optimizer =
+    optimizer = tf.train.AdamOptimizer(learning_rate).minimize(cost)
