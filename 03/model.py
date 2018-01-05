@@ -57,15 +57,15 @@ with tf.variable_scope('layer_1'):
 
 # Layer 2
 with tf.variable_scope('layer_2'):
-
-
-
+    weights = tf.get_variable(name="weights2", shape=[layer_1_nodes, layer_2_nodes], initializer=tf.contrib.layers.xavier_initializers())
+    biases = tf.get_variable(name="biases2", shape=[layer_2_nodes], initializer=tf.zeros_initializer)
+    layer_2_output = tf.nn.relu(tf.matmul(layer_1_output, weights) + biases)
 
 # Layer 3
 with tf.variable_scope('layer_3'):
-
-
-
+    weights = tf.get_variable(name="weights3", shape=[layer_2_nodes, layer_3_nodes],  initializer=tf.contrib.layers.xavier_initializers())
+    biases = tf.get_variable(name="biases3", shape=[layer_3_nodes], initializer=tf.zeros_initializer)
+    layer_3_output = tf.nn.relu(tf.matmul(layer_2_output, weights) + biases)
 
 # Output Layer
 with tf.variable_scope('output'):
